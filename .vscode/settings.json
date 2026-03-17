@@ -1,0 +1,37 @@
+{
+  // ──────────────────────────────────────────────
+  // VS Code Workspace Settings for MCP Servers Monorepo
+  // ──────────────────────────────────────────────
+
+  // Editor defaults
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // TypeScript settings (for mcps/mcp-with-express)
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.tsdk": "mcps/mcp-with-express/node_modules/typescript/lib",
+
+  // Python settings (for mcps/mcp-with-fastmcp)
+  "python.defaultInterpreterPath": "mcps/mcp-with-fastmcp/weather/.venv/bin/python",
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+
+  // ──────────────────────────────────────────────
+  // GitHub Copilot & Chat Settings
+  // ──────────────────────────────────────────────
+
+  // Enable Copilot custom instructions from .github/copilot-instructions.md
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+
+  // Enable MCP server support in Copilot Chat (agent mode)
+  "chat.mcp.enabled": true,
+
+  // File associations
+  "files.associations": {
+    "*.json": "jsonc"
+  }
+}

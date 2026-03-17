@@ -1,0 +1,61 @@
+{
+  // VS Code MCP Server Configuration
+  // This file configures MCP servers for use with GitHub Copilot and other AI assistants in VS Code.
+  // See: https://code.visualstudio.com/docs/copilot/reference/mcp-configuration
+  //
+  // HOW IT WORKS:
+  //   - Servers listed here are automatically discovered by VS Code and Copilot Chat.
+  //   - "stdio" servers are launched as local child processes.
+  //   - "http" servers connect to a running HTTP endpoint.
+  //   - Use "inputs" to securely prompt for API keys or secrets at runtime (never commit secrets).
+  //
+  // GOVERNANCE:
+  //   - Organizations can restrict which MCP servers are allowed using an MCP registry and allowlist.
+  //   - See docs/mcp-setup-guide.md for details on allowlist enforcement and registry configuration.
+
+  "inputs": [
+    {
+      "id": "express-mcp-url",
+      "description": "URL of the Express MCP server (e.g., http://localhost:3000/mcp or your Vercel deployment URL)",
+      "type": "promptString"
+    }
+  ],
+
+  "servers": {
+    // ──────────────────────────────────────────────
+    // Express MCP Server (TypeScript + Express, HTTP transport)
+    // ──────────────────────────────────────────────
+    // Connects to the Express-based MCP server over HTTP.
+    // Start the server first:  cd mcps/mcp-with-express && pnpm install && pnpm run build && pnpm start
+    "express-mcp-server": {
+      "type": "http",
+      "url": "${input:express-mcp-url}"
+    },
+
+    // ──────────────────────────────────────────────
+    // FastMCP Weather Server (Python + FastMCP, stdio transport)
+    // ──────────────────────────────────────────────
+    // Launches the Python-based MCP server as a local child process using stdio.
+    // Requires Python 3.14+ and uv installed.
+    "fastmcp-weather-server": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "${workspaceFolder}/mcps/mcp-with-fastmcp/weather",
+        "weather.py"
+      ]
+    },
+
+    // ──────────────────────────────────────────────
+    // GitHub Official MCP Server (Example — Cloud-hosted)
+    // ──────────────────────────────────────────────
+    // Connects to GitHub's official MCP API for repo-aware Copilot features.
+    // No local setup required — this is a managed cloud service.
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    }
+  }
+}

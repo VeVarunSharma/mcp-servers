@@ -1,0 +1,35 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/registry.schema.json",
+  "servers": [
+    {
+      "name": "org.example/express-mcp-weather",
+      "title": "Express MCP Weather Server",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "manifestUrl": "https://registry.example.com/v0.1/servers/org.example/express-mcp-weather/versions/1.0.0/index.json"
+        }
+      ]
+    },
+    {
+      "name": "org.example/fastmcp-weather",
+      "title": "FastMCP Weather Server",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "manifestUrl": "https://registry.example.com/v0.1/servers/org.example/fastmcp-weather/versions/0.1.0/index.json"
+        }
+      ]
+    },
+    {
+      "name": "io.modelcontextprotocol.anonymous/github",
+      "title": "GitHub Official MCP Server",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "manifestUrl": "https://registry.example.com/v0.1/servers/io.modelcontextprotocol.anonymous/github/versions/1.0.0/index.json"
+        }
+      ]
+    }
+  ]
+}

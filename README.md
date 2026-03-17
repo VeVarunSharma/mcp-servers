@@ -2,55 +2,84 @@
 
 This repository is a monorepo containing multiple implementations of Model Context Protocol (MCP) servers in different languages and frameworks. Each subproject demonstrates how to build an MCP-compatible server using popular technologies.
 
+It also includes **ready-to-use MCP configurations** for VS Code, GitHub Copilot, and examples of MCP governance (allowlists, registries, guardrails) that teams can adopt.
+
 ## Projects
 
-- **mcps/mcp-with-express**: TypeScript + Express.js
-  - Modern Node.js server using TypeScript and Express.
-  - Features streamable HTTP transport via the MCP SDK.
-  - Includes build scripts and Vercel deployment configuration.
+| Server | Language | Transport | Location |
+|--------|----------|-----------|----------|
+| **Express MCP** | TypeScript + Express.js | HTTP (streamable) | [`mcps/mcp-with-express/`](mcps/mcp-with-express/) |
+| **FastMCP Weather** | Python + FastMCP | stdio | [`mcps/mcp-with-fastmcp/weather/`](mcps/mcp-with-fastmcp/weather/) |
 
-- **mcps/mcp-with-fastapi**: Python + FastAPI
-  - High-performance Python server using FastAPI.
-  - Designed for rapid development and easy deployment.
+Both servers provide weather tools (`get-alerts`, `get-forecast`) using the National Weather Service API.
 
-- **mcps/mcp-with-gin**: Go + Gin
-  - Lightweight Go server using the Gin framework.
-  - Suitable for scalable and fast backend services.
+## MCP Configuration & Governance
 
-## Structure
+This repo includes ready-to-use configuration examples:
 
-```
-mcps/
-  mcp-with-express/   # TypeScript + Express implementation
-  mcp-with-fastapi/   # Python + FastAPI implementation
-  mcp-with-gin/       # Go + Gin implementation
-```
+| File | Purpose |
+|------|---------|
+| [`.vscode/mcp.json`](.vscode/mcp.json) | VS Code MCP server configuration — auto-discovered by Copilot Chat |
+| [`.vscode/settings.json`](.vscode/settings.json) | VS Code workspace settings with MCP and Copilot enabled |
+| [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Repository-level Copilot custom instructions |
+| [`docs/mcp-setup-guide.md`](docs/mcp-setup-guide.md) | **Comprehensive guide**: MCP setup, allowlists, registries & guardrails |
+| [`docs/examples/mcp-registry.json`](docs/examples/mcp-registry.json) | Example MCP registry for organization allowlists |
+| [`docs/examples/mcp-server-manifest.json`](docs/examples/mcp-server-manifest.json) | Example server manifest for registry entries |
+
+> 📖 **New to MCP governance?** Start with the [MCP Setup Guide](docs/mcp-setup-guide.md) — it explains everything from basic VS Code config to enterprise allowlist enforcement.
 
 ## Getting Started
 
-Each subproject is self-contained. Refer to the README in each subdirectory for setup and usage instructions.
+### 1. Open in VS Code
 
-### Example: Express Server
-
+```bash
+git clone <your-repo-url>
+code mcp-servers
 ```
+
+VS Code automatically discovers MCP servers from `.vscode/mcp.json`. Open Copilot Chat (Agent mode) to use the tools.
+
+### 2. Start the Express MCP Server (HTTP)
+
+```bash
 cd mcps/mcp-with-express
 pnpm install
 pnpm run build
 pnpm start
+# Server runs at http://localhost:3000/mcp
 ```
 
-### Example: FastAPI Server
+### 3. Use the FastMCP Weather Server (stdio)
+
+No manual start needed — VS Code launches it automatically via `.vscode/mcp.json`.
+
+To run manually for testing:
+```bash
+cd mcps/mcp-with-fastmcp/weather
+uv run weather.py
+```
+
+## Structure
 
 ```
-cd mcps/mcp-with-fastapi
-# Setup your Python environment and run the server
-```
-
-### Example: Gin Server
-
-```
-cd mcps/mcp-with-gin
-# Build and run your Go server
+mcp-servers/
+├── .vscode/
+│   ├── mcp.json              # MCP server definitions for VS Code
+│   └── settings.json         # Workspace settings (Copilot, MCP enabled)
+├── .github/
+│   ├── copilot-instructions.md  # Copilot custom instructions
+│   ├── agents/               # Agent instruction files
+│   ├── instructions/         # Path-scoped Copilot instructions
+│   └── prompts/              # Prompt templates
+├── docs/
+│   ├── mcp-setup-guide.md    # Full setup & governance guide
+│   └── examples/
+│       ├── mcp-registry.json       # Example org allowlist registry
+│       └── mcp-server-manifest.json # Example server manifest
+└── mcps/
+    ├── mcp-with-express/     # TypeScript + Express MCP server
+    └── mcp-with-fastmcp/     # Python + FastMCP server
+        └── weather/
 ```
 
 ## Deployment
@@ -64,4 +93,4 @@ MIT
 
 ---
 
-For more details, see the documentation in each subproject.
+For more details, see the [MCP Setup Guide](docs/mcp-setup-guide.md) and the documentation in each subproject.
